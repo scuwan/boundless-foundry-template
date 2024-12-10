@@ -32,10 +32,9 @@ cargo test
 
 ### Set up your environment
 
-Export the following env variables with your test wallet private key and preferred RPC provider.
+Export your Sepolia testnet wallet private key as an environment variable:
 
 ```bash
-export RPC_URL="https://ethereum-sepolia-rpc.publicnode.com"
 export WALLET_PRIVATE_KEY="YOUR_WALLET_PRIVATE_KEY"
 ```
 
@@ -47,6 +46,7 @@ The example app reads from this `.env` file automatically.
 To deploy the `EvenNumber` contract run:
 
 ```bash
+. ./.env # load the environment variables from the .env file for deployment
 forge script contracts/scripts/Deploy.s.sol --rpc-url ${RPC_URL:?} --broadcast -vv
 ```
 
