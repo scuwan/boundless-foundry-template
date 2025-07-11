@@ -34,7 +34,7 @@ fn proves_even_number() {
 }
 
 #[test]
-#[should_panic(expected = "number is not even")]
+#[should_panic(expected = "number is not even number")]
 fn rejects_odd_number() {
     let odd_number = U256::from(6);
 

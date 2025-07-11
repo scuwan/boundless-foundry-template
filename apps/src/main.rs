@@ -16,15 +16,16 @@ use std::time::Duration;
 
 use crate::even_number::IEvenNumber::IEvenNumberInstance;
 use alloy::{
-    primitives::{Address, U256},
+    primitives::{Address, U256, B256},
     signers::local::PrivateKeySigner,
     sol_types::SolValue,
 };
 use anyhow::{bail, Context, Result};
 use boundless_market::{Client, Deployment, StorageProviderConfig};
 use clap::Parser;
-use guests::IS_EVEN_ELF;
+use guests::{IS_EVEN_ELF, IS_EVEN_ID};
 use url::Url;
+use risc0_zkvm::Digest;
 
 /// Timeout for the transaction to be confirmed.
 pub const TX_TIMEOUT: Duration = Duration::from_secs(30);
@@ -81,6 +82,7 @@ async fn main() -> Result<()> {
     }
     let args = Args::parse();
 
+    tracing::info!("imageID: {:?}", B256::try_from(Digest::from(IS_EVEN_ID).as_bytes())?);
     // Create a Boundless client from the provided parameters.
     let client = Client::builder()
         .with_rpc_url(args.rpc_url)

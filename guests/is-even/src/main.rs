@@ -31,7 +31,7 @@ fn main() {
 
     // Run the computation.
     // In this case, asserting that the provided number is even.
-    assert!(!sum.bit(0), "number is not even");
+    assert!(!sum.bit(0), "number is not even number");
 
     // Commit the journal that will be received by the application contract.
     // Journal is encoded using Solidity ABI for easy decoding in the app contract.
