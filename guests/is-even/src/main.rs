@@ -24,10 +24,14 @@ fn main() {
     env::stdin().read_to_end(&mut input_bytes).unwrap();
     // Decode and parse the input
     let number = <U256>::abi_decode(&input_bytes).unwrap();
+    let mut sum: U256 = U256::from(0);
+    for i in 0..number.to::<u32>() {
+        sum = sum.wrapping_add(U256::from(i))
+    }
 
     // Run the computation.
     // In this case, asserting that the provided number is even.
-    assert!(!number.bit(0), "number is not even");
+    assert!(!sum.bit(0), "number is not even");
 
     // Commit the journal that will be received by the application contract.
     // Journal is encoded using Solidity ABI for easy decoding in the app contract.
