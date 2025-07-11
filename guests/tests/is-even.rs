@@ -19,7 +19,7 @@ use risc0_zkvm::{default_executor, ExecutorEnv};
 
 #[test]
 fn proves_even_number() {
-    let even_number = U256::from(3);
+    let even_number = U256::from(5);
 
     let env = ExecutorEnv::builder()
         .write_slice(&even_number.abi_encode())
@@ -36,7 +36,7 @@ fn proves_even_number() {
 #[test]
 #[should_panic(expected = "number is not even")]
 fn rejects_odd_number() {
-    let odd_number = U256::from(5);
+    let odd_number = U256::from(6);
 
     let env = ExecutorEnv::builder()
         .write_slice(&odd_number.abi_encode())
