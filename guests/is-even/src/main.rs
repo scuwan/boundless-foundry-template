@@ -17,6 +17,7 @@ use std::io::Read;
 use alloy_primitives::U256;
 use alloy_sol_types::SolValue;
 use risc0_zkvm::guest::env;
+use risc0_zkvm::sha::{Impl, Sha256};
 
 fn main() {
     // Read the input data for this application.
@@ -24,14 +25,15 @@ fn main() {
     env::stdin().read_to_end(&mut input_bytes).unwrap();
     // Decode and parse the input
     let number = <U256>::abi_decode(&input_bytes).unwrap();
-    let mut sum: U256 = U256::from(0);
-    for i in 0..number.to::<u32>() {
-        sum = sum.wrapping_add(U256::from(i))
-    }
+    let mut digest = Impl::hash_bytes(&number.abi_encode());
 
+    for _i in 0..number.to::<u32>() {
+        digest = Impl::hash_bytes(digest.as_bytes())
+    }
+    let result = <U256>::abi_decode(digest.as_bytes()).unwrap();
     // Run the computation.
     // In this case, asserting that the provided number is even.
-    assert!(!sum.bit(0), "number is not even number");
+    assert!(!result.bit(0), "number is not even number");
 
     // Commit the journal that will be received by the application contract.
     // Journal is encoded using Solidity ABI for easy decoding in the app contract.
